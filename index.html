@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="color-scheme" content="dark">
+<title>Certamen 1 — Guia Practica</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  color-scheme:dark;
+  --bg:#15151E;--panel:#1F1F2B;--panelh:#282836;--text:#EAE6DE;--muted:#9C96A6;--border:#33333F;
+  --nav:#0D0D14;--code:#0B0B12;--codetext:#E6E0D4;
+  --blue:#6FB0EA;--bl:#182A3E;--green:#5FC088;--gl:#16291F;
+  --amber:#E2A657;--al:#2C2611;--red:#F09090;--rl:#2E1919;--gray:#9C96A6
+}
+body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);font-size:14px;line-height:1.6}
+
+.nav{position:sticky;top:0;z-index:100;background:var(--nav);display:flex;overflow-x:auto;scrollbar-width:none;border-bottom:1px solid var(--border)}
+.nav::-webkit-scrollbar{display:none}
+.tab{background:none;border:none;cursor:pointer;color:#847E90;font-family:'DM Sans',sans-serif;font-size:11px;font-weight:700;letter-spacing:.04em;padding:11px 13px;white-space:nowrap;text-transform:uppercase;border-bottom:3px solid transparent}
+.tab.active{color:white;border-bottom-color:var(--blue)}
+.tab.hot{color:#FBBF24}
+.tab.hot.active{color:#FBBF24;border-bottom-color:#FBBF24}
+
+.page{display:none;max-width:880px;margin:0 auto;padding:26px 16px 70px}
+.page.active{display:block}
+h1{font-family:'Playfair Display',serif;font-size:25px;font-weight:900;margin-bottom:4px;color:var(--text)}
+.sub{color:var(--muted);font-size:13px;margin-bottom:20px}
+
+.banner{background:#1B4F8A;color:white;border-radius:10px;padding:16px 20px;margin-bottom:18px}
+.banner.gold{background:linear-gradient(135deg,#B45309,#7A3908)}
+.bl{font-size:11px;letter-spacing:.08em;text-transform:uppercase;opacity:.8;margin-bottom:4px}
+
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:16px}
+@media(max-width:560px){.g2{grid-template-columns:1fr}}
+.card{border-radius:10px;padding:14px;background:var(--panel);border:1.5px solid var(--border);color:var(--text)}
+.card.b{border-left:4px solid var(--blue);background:var(--bl)}
+.card.g{border-left:4px solid var(--green);background:var(--gl)}
+.card.a{border-left:4px solid var(--amber);background:var(--al)}
+.card.r{border-left:4px solid var(--red);background:var(--rl)}
+.card h4{font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;margin-bottom:7px}
+.card.b h4{color:var(--blue)}.card.g h4{color:var(--green)}.card.a h4{color:var(--amber)}.card.r h4{color:var(--red)}
+.card p{font-size:13px;line-height:1.6;color:var(--text)}
+
+.formula{background:var(--code);color:var(--codetext);font-family:'Courier New',monospace;font-size:13px;line-height:1.85;border-radius:8px;padding:14px 16px;margin:10px 0;overflow-x:auto;white-space:pre;border:1px solid var(--border)}
+.formula.big{font-size:15px;border:2px solid var(--amber)}
+
+table{width:100%;border-collapse:collapse;margin:10px 0;font-size:13px}
+th{background:var(--nav);color:white;padding:8px 11px;text-align:left;font-size:11px}
+td{padding:7px 11px;border-bottom:1px solid var(--border);color:var(--text)}
+tr:nth-child(even) td{background:#1A1A24}
+
+.sec{font-family:'Playfair Display',serif;font-size:17px;font-weight:700;margin:20px 0 10px;border-bottom:2px solid var(--border);padding-bottom:5px;color:var(--text)}
+
+.step{display:flex;gap:12px;align-items:flex-start;margin-bottom:11px}
+.sn{min-width:26px;height:26px;background:#2E6FB0;color:white;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;flex-shrink:0;margin-top:2px}
+.sn.gold{background:var(--amber);color:#1A1A2E}
+.sb strong{display:block;font-size:13px;margin-bottom:2px;color:var(--text)}
+.sb p{font-size:13px;color:var(--muted)}
+
+.trap{display:flex;gap:10px;padding:10px 14px;background:var(--rl);border-left:3px solid var(--red);border-radius:6px;margin-bottom:8px;font-size:13px}
+.note{background:var(--gl);border-left:4px solid var(--green);border-radius:6px;padding:10px 14px;margin:10px 0;font-size:13px}
+.note strong{color:var(--green)}
+
+.coll{margin-bottom:8px}
+.coll-btn{width:100%;background:var(--panel);border:1.5px solid var(--border);border-radius:8px;padding:11px 14px;text-align:left;cursor:pointer;font-family:'DM Sans',sans-serif;font-size:13px;font-weight:600;display:flex;justify-content:space-between;align-items:center;color:var(--text)}
+.coll-btn:hover{background:var(--panelh)}
+.coll-btn .arr{transition:transform .2s}
+.coll-btn.open .arr{transform:rotate(90deg)}
+.coll-body{display:none;padding:13px 14px;background:var(--panel);border:1.5px solid var(--border);border-top:none;border-radius:0 0 8px 8px;font-size:13px}
+.coll-body.open{display:block}
+
+.simq{background:var(--panel);border:1.5px solid var(--border);border-radius:10px;padding:16px;margin-bottom:14px}
+.simq .qhead{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}
+.simq .qnum{font-family:'Playfair Display',serif;font-weight:700;font-size:16px;color:var(--text)}
+.simq .qpts{font-size:11px;font-weight:700;color:var(--blue);background:var(--bl);padding:3px 10px;border-radius:20px}
+.simq .qbody{font-size:13.5px;background:var(--bl);padding:11px 13px;border-radius:6px;margin-bottom:10px;color:var(--text)}
+
+.pill{display:inline-block;background:var(--code);color:var(--codetext);font-family:'Courier New',monospace;font-size:12px;padding:4px 11px;border-radius:18px;margin:3px 4px 3px 0;border:1px solid var(--border)}
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <button class="tab active" onclick="show('inicio')">Inicio</button>
+  <button class="tab" onclick="show('vad')">1 · VAD</button>
+  <button class="tab" onclick="show('mom')">2 · Momentos</button>
+  <button class="tab" onclick="show('mv')">3 · Max Verosimil</button>
+  <button class="tab" onclick="show('est')">4 · Estimadores</button>
+  <button class="tab" onclick="show('sim')">Simulacro</button>
+  <button class="tab" onclick="show('cheat')">Cheat Sheet</button>
+  <button class="tab hot" onclick="show('quince')">&#9733; Ultimos 15 min</button>
+</nav>
+
+<!-- INICIO -->
+<div id="inicio" class="page active">
+<h1>Certamen 1 — Metodos Estadisticos</h1>
+<p class="sub">Temario: (1) VAD esperanza y varianza · (2) Metodo de Momentos · (3) Maxima Verosimilitud · (4) Propiedades de estimadores</p>
+
+<div class="banner">
+<div class="bl">Idea clave</div>
+<p>Cuatro temas, pero cada uno es una RECETA fija de pasos. Tres son "calcular/estimar" (VAD, Momentos, MV) y el cuarto es "comparar estimadores" (insesgadez + eficiencia). Si te aprendes los pasos de cada receta, el ejercicio se arma solo. Lo unico que cambia entre problemas es la distribucion o los numeros.</p>
+</div>
+
+<div class="card a" style="margin-bottom:16px">
+<h4>&#9888;&#65039; Habitos que cobra el profe (Chany) — valen puntos</h4>
+<p><strong>1. Notacion de estimador con sombrero:</strong> escribe &theta;&#770;, &lambda;&#770;, &mu;&#770; — sin el gorrito descuentan.<br>
+<strong>2. Cuatro decimales:</strong> 28,2000 (no 28,2).<br>
+<strong>3. Interpreta TODO resultado numerico:</strong> una frase con contexto y unidades (ej. "en promedio, un cliente gasta 28,2000 miles de pesos").</p>
+</div>
+
+<h3 class="sec">Que pide cada tema</h3>
+<table>
+<tr><th>Tema</th><th>Que te dan</th><th>Que entregas</th></tr>
+<tr><td>1 · VAD</td><td>Tabla x / P(X=x)</td><td>E(X), Var(X), (a veces E(Y), Var(Y))</td></tr>
+<tr><td>2 · Momentos</td><td>Densidad con parametro + muestra</td><td>Estimador &theta;&#770; y su valor</td></tr>
+<tr><td>3 · Max Verosimil</td><td>Densidad con parametro + muestra</td><td>Estimador &lambda;&#770; (por derivada)</td></tr>
+<tr><td>4 · Estimadores</td><td>Varios estimadores (combinaciones)</td><td>Cual es insesgado y cual mas eficiente</td></tr>
+</table>
+
+<div class="note"><strong>Momentos vs Max Verosimil:</strong> los dos estiman un parametro, pero Momentos es corto (iguala E(X) al promedio y despeja) y MV es largo (construye L, log, deriva, iguala a 0, despeja). Si el enunciado dice "por el metodo de los momentos" o "por maxima verosimilitud", te esta diciendo cual usar.</div>
+</div>
+
+<!-- VAD -->
+<div id="vad" class="page">
+<h1>1 · Variable Aleatoria Discreta</h1>
+<p class="sub">Esperanza, varianza y transformacion lineal</p>
+
+<h3 class="sec">Los pasos</h3>
+<div class="step"><div class="sn">1</div><div class="sb"><strong>E(X)</strong><p>Suma de cada valor por su probabilidad</p></div></div>
+<div class="step"><div class="sn">2</div><div class="sb"><strong>E(X&#178;)</strong><p>Igual, pero elevando cada valor al cuadrado antes</p></div></div>
+<div class="step"><div class="sn">3</div><div class="sb"><strong>Var(X)</strong><p>Var(X) = E(X&#178;) &minus; (E(X))&#178;</p></div></div>
+<div class="step"><div class="sn">4</div><div class="sb"><strong>Desviacion (si la piden)</strong><p>&sigma; = &#8730;Var(X)</p></div></div>
+<div class="step"><div class="sn">5</div><div class="sb"><strong>Transformacion Y = aX + b (si aparece)</strong><p>Usa propiedades, no recalcules desde la tabla</p></div></div>
+
+<h3 class="sec">Formulas</h3>
+<div class="formula">E(X)  = &Sigma; x &middot; P(X=x)
+E(X&#178;) = &Sigma; x&#178; &middot; P(X=x)
+Var(X)= E(X&#178;) &minus; (E(X))&#178;
+&sigma;     = &#8730;Var(X)
+
+Transformacion Y = aX + b:
+E(Y)  = a&middot;E(X) + b
+Var(Y)= a&#178;&middot;Var(X)      &rarr; el +b DESAPARECE, la a va al cuadrado</div>
+
+<div class="card r" style="margin-bottom:10px">
+<h4>&#9888;&#65039; Trampa #1 — E(X&#178;) no es (E(X))&#178;</h4>
+<p>En <strong>E(X&#178;)</strong> elevas cada valor y luego ponderas. En <strong>(E(X))&#178;</strong> ponderas primero y elevas al final. Son numeros distintos.</p>
+</div>
+<div class="card r" style="margin-bottom:14px">
+<h4>&#9888;&#65039; Trampa #2 — en la varianza el a va al cuadrado sobre Var, no sobre E</h4>
+<p>Var(aX+b) = a&#178;&middot;<strong>Var(X)</strong>. El a&#178; multiplica a la VARIANZA, no a la esperanza. Y el +b no aparece (sumar no cambia la dispersion).</p>
+</div>
+
+<h3 class="sec">Ejemplo completo</h3>
+<div class="card b"><h4>Gasto por cliente (miles de pesos)</h4><p>Tabla: x = 10, 20, 30, 40 con P = 0,2 / 0,3 / 0,4 / 0,1. Recargo Y = 2X + 5. Calcule E(X), Var(X), E(Y), Var(Y).</p></div>
+<div class="formula">E(X)  = 10&middot;0,2 + 20&middot;0,3 + 30&middot;0,4 + 40&middot;0,1
+      = 2 + 6 + 12 + 4 = 24,0000
+
+E(X&#178;) = 10&#178;&middot;0,2 + 20&#178;&middot;0,3 + 30&#178;&middot;0,4 + 40&#178;&middot;0,1
+      = 20 + 120 + 360 + 160 = 660,0000
+
+Var(X)= 660 &minus; 24&#178; = 660 &minus; 576 = 84,0000
+
+E(Y)  = 2&middot;24 + 5 = 53,0000
+Var(Y)= 2&#178;&middot;84 = 4&middot;84 = 336,0000
+
+Interpretacion: en promedio el cliente gasta 24,0000 miles de pesos;
+con el recargo, 53,0000 miles de pesos.</div>
+</div>
+
+<!-- MOMENTOS -->
+<div id="mom" class="page">
+<h1>2 · Metodo de los Momentos</h1>
+<p class="sub">Igualar el momento poblacional con el muestral</p>
+
+<h3 class="sec">Los pasos</h3>
+<div class="step"><div class="sn">1</div><div class="sb"><strong>Promedio muestral</strong><p>X&#772; = (1/n)&Sigma;x&#7522; — el promedio simple de los datos</p></div></div>
+<div class="step"><div class="sn">2</div><div class="sb"><strong>Consigue E(X)</strong><p>Si te la dan (Indicacion), usala. Si no, construyela: E(X)=&Sigma; x&middot;P(X=x)</p></div></div>
+<div class="step"><div class="sn">3</div><div class="sb"><strong>Iguala</strong><p>E(X) = X&#772;</p></div></div>
+<div class="step"><div class="sn">4</div><div class="sb"><strong>Despeja el parametro</strong><p>Y ponle sombrero: &theta;&#770;</p></div></div>
+
+<h3 class="sec">Formula</h3>
+<div class="formula">E(X) = X&#772;      &rarr;   despejas el parametro
+
+X&#772; = (1/n) &Sigma; x&#7522;      (promedio de los datos)</div>
+
+<div class="card r" style="margin-bottom:10px">
+<h4>&#9888;&#65039; Trampa #1 — E(X) NO es P(X=x)</h4>
+<p>Si la densidad trae el parametro, tienes que <strong>construir</strong> E(X) sumando x&middot;P(X=x) sobre todos los valores. El resultado queda <strong>solo en funcion del parametro, sin x</strong>. Si tu E(X) todavia tiene x, no la terminaste.</p>
+</div>
+<div class="card r" style="margin-bottom:14px">
+<h4>&#9888;&#65039; Trampa #2 — signos al despejar</h4>
+<p>Al pasar terminos de un lado a otro se cambia el signo. Chequeo: si el enunciado dice <strong>&theta; &gt; 0</strong> y te sale negativo, hay un error de signo. Revisa antes de entregar.</p>
+</div>
+
+<h3 class="sec">Ejemplo completo (formato del control)</h3>
+<div class="card b"><h4>Estimar &theta; por momentos</h4><p>Poblacion con densidad f(x;&theta;) y se indica que E(X) = &theta;/4. Muestra n=4: 8, 12, 16, 20.</p></div>
+<div class="formula">Momento poblacional:  E(X) = &theta;/4
+Momento muestral:     X&#772; = (8+12+16+20)/4 = 56/4 = 14,0000
+
+Igualando:   &theta;/4 = X&#772;
+Despejando:  &theta;&#770; = 4X&#772; = 4&middot;14 = 56,0000
+
+Interpretacion: la estimacion puntual del parametro es 56,0000.
+(Coherente: &theta;&#770;=56 supera al maximo observado 20.)</div>
+
+<div class="note"><strong>Si E(X) NO te la dan</strong> y la pmf es tipo P(X=x)=(&theta;+x)/(...): construye E(X)=&Sigma; x&middot;P(X=x), simplifica (queda solo con &theta;), iguala al promedio y despeja.</div>
+</div>
+
+<!-- MAX VEROSIMIL -->
+<div id="mv" class="page">
+<h1>3 · Maxima Verosimilitud (MV)</h1>
+<p class="sub">Construir L, log, derivar, igualar a 0, despejar</p>
+
+<h3 class="sec">Los 5 pasos</h3>
+<div class="step"><div class="sn">1</div><div class="sb"><strong>Escribir f(x)</strong><p>La densidad o P(X=x) que te dan</p></div></div>
+<div class="step"><div class="sn">2</div><div class="sb"><strong>Verosimilitud L</strong><p>L = producto de f(x&#7522;), y se junta con reglas de potencias</p></div></div>
+<div class="step"><div class="sn">3</div><div class="sb"><strong>Logaritmo natural</strong><p>&#8467;(&theta;) = ln L — convierte productos en sumas</p></div></div>
+<div class="step"><div class="sn">4</div><div class="sb"><strong>Derivar e igualar a 0</strong><p>Derivas respecto al parametro</p></div></div>
+<div class="step"><div class="sn">5</div><div class="sb"><strong>Despejar</strong><p>El estimador, con sombrero &lambda;&#770;</p></div></div>
+
+<h3 class="sec">Al juntar el producto (paso 2) — la regla de oro</h3>
+<div class="formula">En un f(x), mira cada factor:
+
+exponente TIENE x&#7522;   &rarr; se SUMAN     &rarr; aparece  &Sigma;x&#7522;
+exponente CONSTANTE   &rarr; x n          &rarr; aparece  n
+la BASE es x&#7522;        &rarr; se MULTIPLICAN &rarr; aparece  &prod;x&#7522;
+                                        (y con ln &rarr; &Sigma;ln x&#7522;)</div>
+
+<h3 class="sec">Reglas del logaritmo (las 4)</h3>
+<div class="formula">ln(A&middot;B)   = ln A + ln B         (producto &rarr; suma)
+ln(A^k)   = k&middot;ln A             (exponente baja adelante)
+ln(e^y)   = y                   (ln y e se cancelan)
+ln(A/B)   = ln A &minus; ln B         (division &rarr; resta)</div>
+
+<div class="card r" style="margin-bottom:10px">
+<h4>&#9888;&#65039; Trampa #1 — los exponentes se SUMAN</h4>
+<p>p^x&#8321; &middot; p^x&#8322; &middot; ... = p^(&Sigma;x&#7522;). Es <strong>&Sigma;x&#7522;</strong>, NUNCA n&middot;x.</p>
+</div>
+<div class="card r" style="margin-bottom:14px">
+<h4>&#9888;&#65039; Trampa #2 — las constantes mueren al derivar</h4>
+<p>Todo lo que NO tiene el parametro (x!, &prod;x&#7522;, ln(2)...) es constante &rarr; su derivada es 0. Arrastralo tranquilo, no afecta al estimador.</p>
+</div>
+
+<h3 class="sec">Ejemplo completo — Exponencial</h3>
+<div class="card b"><h4>Tiempo de espera, X ~ Exponencial(&lambda;)</h4><p>f(x;&lambda;) = &lambda;&middot;e^(&minus;&lambda;x), x&gt;0. Muestra de tamano n. Halle &lambda;&#770;.</p></div>
+<div class="formula">2) L(&lambda;) = &prod; &lambda;e^(&minus;&lambda;x&#7522;) = &lambda;^n &middot; e^(&minus;&lambda;&Sigma;x&#7522;)
+       ( &lambda;^1 sin x &rarr; &lambda;^n ;  exponente con x &rarr; &Sigma;x&#7522; )
+
+3) &#8467;(&lambda;) = n&middot;ln(&lambda;) &minus; &lambda;&Sigma;x&#7522;
+
+4) &#8467;'(&lambda;) = n/&lambda; &minus; &Sigma;x&#7522; = 0
+
+5) n/&lambda; = &Sigma;x&#7522;   &rarr;   &lambda;&#770; = n/&Sigma;x&#7522; = 1/X&#772;</div>
+</div>
+
+<!-- ESTIMADORES -->
+<div id="est" class="page">
+<h1>4 · Propiedades de los Estimadores</h1>
+<p class="sub">Insesgadez y eficiencia</p>
+
+<h3 class="sec">Las dos propiedades</h3>
+<div class="g2">
+<div class="card b"><h4>Insesgado</h4><p>En promedio acierta el parametro. Es insesgado si <strong>E(&theta;&#770;) = &theta;</strong> (sesgo 0).</p></div>
+<div class="card g"><h4>Mas eficiente</h4><p>Entre insesgados, el de <strong>menor varianza</strong> Var(&theta;&#770;).</p></div>
+</div>
+
+<h3 class="sec">Formulas (del formulario)</h3>
+<div class="formula">Sesgo(&theta;&#770;) = E(&theta;&#770;) &minus; &theta;        &rarr; insesgado si = 0
+ECM(&theta;&#770;)  = (Sesgo)&#178; + Var(&theta;&#770;)   &rarr; si es insesgado, ECM = Var</div>
+
+<h3 class="sec">El atajo (para estimadores tipo aX&#8321;+bX&#8322;+...)</h3>
+<div class="formula">Cada dato:  E(X&#7522;) = &mu;      Var(X&#7522;) = &sigma;&#178;
+
+E(aX&#8321;+bX&#8322;+...) = (a+b+...)&middot;&mu;     &rarr; INSESGADO si a+b+... = 1
+Var(aX&#8321;+bX&#8322;+...)= (a&#178;+b&#178;+...)&middot;&sigma;&#178;   &rarr; los pesos van al CUADRADO
+
+Mas eficiente = menor (a&#178;+b&#178;+...)</div>
+
+<div class="card g" style="margin-bottom:14px">
+<h4>&#10003; Regla de oro</h4>
+<p><strong>Pesos suman 1 &rarr; insesgado.</strong> <strong>Menor suma de pesos al cuadrado &rarr; mas eficiente.</strong></p>
+</div>
+
+<h3 class="sec">Ejemplo completo</h3>
+<div class="card b"><h4>Tres estimadores de &mu; (n=3, varianza &sigma;&#178;)</h4><p>&mu;&#770;&#8321; = &#8531;X&#8321;+&#8531;X&#8322;+&#8531;X&#8323; ; &mu;&#770;&#8322; = &frac14;X&#8321;+&frac12;X&#8322;+&frac14;X&#8323; ; &mu;&#770;&#8323; = &#8539;X&#8321;+&#8540;X&#8322;+&frac12;X&#8323;. Insesgados? Cual mas eficiente?</p></div>
+<div class="formula">a) Insesgadez (pesos suman 1?):
+   &mu;&#770;&#8321;: 1/3+1/3+1/3 = 1  &rarr; insesgado
+   &mu;&#770;&#8322;: 1/4+1/2+1/4 = 1  &rarr; insesgado
+   &mu;&#770;&#8323;: 1/8+3/8+1/2 = 1  &rarr; insesgado
+
+b) Varianza (suma de pesos al cuadrado):
+   Var(&mu;&#770;&#8321;) = (1/9+1/9+1/9)&sigma;&#178; = (1/3)&sigma;&#178;  &asymp; 0,3333 &sigma;&#178;
+   Var(&mu;&#770;&#8322;) = (1/16+1/4+1/16)&sigma;&#178; = (3/8)&sigma;&#178; = 0,3750 &sigma;&#178;
+   Var(&mu;&#770;&#8323;) = (1/64+9/64+1/4)&sigma;&#178; = (13/32)&sigma;&#178; &asymp; 0,4063 &sigma;&#178;
+
+Conclusion: &mu;&#770;&#8321; es el mas eficiente (menor varianza).</div>
+</div>
+
+<!-- SIMULACRO -->
+<div id="sim" class="page">
+<h1>Simulacro</h1>
+<p class="sub">Formato real del certamen · resuelve antes de revelar</p>
+
+<div class="banner"><div class="bl">Instrucciones</div><p>Resuelve los 4 a mano con tu formulario y calculadora. Usa 4 decimales, notacion con sombrero e interpreta. Luego abre cada solucion. Cronometrate.</p></div>
+
+<div class="simq">
+<div class="qhead"><span class="qnum">Pregunta 1 — VAD</span><span class="qpts">30 pts</span></div>
+<div class="qbody">Una plataforma registra el monto X (miles de pesos) por compra, con distribucion: x = 15, 25, 35, 45 y P = 0,30 / 0,25 / 0,25 / 0,20. a) Calcule E(X) y Var(X). b) Se aplica un cargo Y = 3X &minus; 10; usando propiedades calcule E(Y) y Var(Y). Interprete.</div>
+<div class="coll"><button class="coll-btn" onclick="tog(this)">Ver solucion <span class="arr">&#9656;</span></button>
+<div class="coll-body"><div class="formula">E(X)  = 15&middot;0,30 + 25&middot;0,25 + 35&middot;0,25 + 45&middot;0,20
+      = 4,5 + 6,25 + 8,75 + 9 = 28,5000
+
+E(X&#178;) = 15&#178;&middot;0,30 + 25&#178;&middot;0,25 + 35&#178;&middot;0,25 + 45&#178;&middot;0,20
+      = 67,5 + 156,25 + 306,25 + 405 = 935,0000
+
+Var(X)= 935 &minus; 28,5&#178; = 935 &minus; 812,25 = 122,7500
+
+E(Y)  = 3&middot;28,5 &minus; 10 = 75,5000
+Var(Y)= 3&#178;&middot;122,75 = 9&middot;122,75 = 1104,7500
+
+"En promedio se gastan 28,5000 miles de pesos por compra;
+con el cargo, 75,5000 miles de pesos."</div></div></div>
+</div>
+
+<div class="simq">
+<div class="qhead"><span class="qnum">Pregunta 2 — Momentos</span><span class="qpts">45 pts</span></div>
+<div class="qbody">Sea {x&#8321;,...,x&#8345;} una muestra de una poblacion con densidad f(x;&theta;). Indicacion: E(X) = &theta;/5. a) Determine por el Metodo de los Momentos el estimador de &theta;. b) Calcule su valor con la muestra n=5: 10, 14, 18, 22, 26.</div>
+<div class="coll"><button class="coll-btn" onclick="tog(this)">Ver solucion <span class="arr">&#9656;</span></button>
+<div class="coll-body"><div class="formula">a) Momento poblacional:  E(X) = &theta;/5
+   Momento muestral:     X&#772; = (1/n)&Sigma;x&#7522;
+   Igualando:  &theta;/5 = X&#772;   &rarr;   &theta;&#770; = 5X&#772;
+
+b) X&#772; = (10+14+18+22+26)/5 = 90/5 = 18,0000
+   &theta;&#770; = 5&middot;18 = 90,0000
+
+Interpretacion: la estimacion puntual del parametro es 90,0000.</div></div></div>
+</div>
+
+<div class="simq">
+<div class="qhead"><span class="qnum">Pregunta 3 — Maxima Verosimilitud</span><span class="qpts">25 pts</span></div>
+<div class="qbody">Sea {x&#8321;,...,x&#8345;} una muestra de una poblacion con densidad f(x;&lambda;) = (&lambda;&#179;/2)&middot;x&#178;&middot;e^(&minus;&lambda;x), x&gt;0. Determine por Maxima Verosimilitud el estimador de &lambda;.</div>
+<div class="coll"><button class="coll-btn" onclick="tog(this)">Ver solucion <span class="arr">&#9656;</span></button>
+<div class="coll-body"><div class="formula">1) L(&lambda;) = &prod; (&lambda;&#179;/2)&middot;x&#7522;&#178;&middot;e^(&minus;&lambda;x&#7522;)
+        = (&lambda;^(3n)/2^n) &middot; (&prod;x&#7522;&#178;) &middot; e^(&minus;&lambda;&Sigma;x&#7522;)
+
+2) &#8467;(&lambda;) = 3n&middot;ln(&lambda;) &minus; n&middot;ln(2) + 2&Sigma;ln(x&#7522;) &minus; &lambda;&Sigma;x&#7522;
+   ( los terminos sin &lambda; son constantes )
+
+3) &#8467;'(&lambda;) = 3n/&lambda; &minus; &Sigma;x&#7522; = 0
+
+4) &lambda;&#770; = 3n/&Sigma;x&#7522; = 3/X&#772;
+
+Nota: el &prod;x&#7522;&#178; y el ln(2) murieron al derivar. No afectan &lambda;&#770;.</div></div></div>
+</div>
+
+<div class="simq">
+<div class="qhead"><span class="qnum">Pregunta 4 — Estimadores</span><span class="qpts">30 pts</span></div>
+<div class="qbody">Muestra n=3 de una poblacion con media &mu; y varianza &sigma;&#178;. Dos estimadores de &mu;: &mu;&#770;&#8321; = 0,5X&#8321; + 0,3X&#8322; + 0,2X&#8323; ; &mu;&#770;&#8322; = &#8531;X&#8321; + &#8531;X&#8322; + &#8531;X&#8323;. a) Son insesgados? b) Cual es mas eficiente?</div>
+<div class="coll"><button class="coll-btn" onclick="tog(this)">Ver solucion <span class="arr">&#9656;</span></button>
+<div class="coll-body"><div class="formula">a) Insesgadez (pesos suman 1?):
+   &mu;&#770;&#8321;: 0,5+0,3+0,2 = 1  &rarr; insesgado
+   &mu;&#770;&#8322;: 1/3+1/3+1/3 = 1  &rarr; insesgado
+
+b) Varianza (pesos al cuadrado):
+   Var(&mu;&#770;&#8321;) = (0,5&#178;+0,3&#178;+0,2&#178;)&sigma;&#178; = (0,25+0,09+0,04)&sigma;&#178; = 0,3800 &sigma;&#178;
+   Var(&mu;&#770;&#8322;) = (1/9+1/9+1/9)&sigma;&#178; = 0,3333 &sigma;&#178;
+
+Conclusion: &mu;&#770;&#8322; es el mas eficiente (menor varianza).</div></div></div>
+</div>
+</div>
+
+<!-- CHEAT SHEET -->
+<div id="cheat" class="page">
+<h1>Cheat Sheet</h1>
+<p class="sub">Todo lo esencial en una vista</p>
+
+<h3 class="sec">Formulas por tema</h3>
+<div class="g2">
+<div class="card b"><h4>VAD</h4><p><span class="pill">E(X)=&Sigma;x&middot;P(X=x)</span><span class="pill">Var=E(X&#178;)&minus;(E(X))&#178;</span><br>Y=aX+b: E(Y)=aE(X)+b · Var(Y)=a&#178;Var(X)</p></div>
+<div class="card g"><h4>Momentos</h4><p><span class="pill">E(X) = X&#772;</span><br>Iguala y despeja. X&#772;=(1/n)&Sigma;x&#7522;</p></div>
+<div class="card a"><h4>Max Verosimil</h4><p><span class="pill">L=&prod;f(x&#7522;) &rarr; ln &rarr; deriva=0</span><br>exponente con x &rarr; &Sigma;x&#7522; · constante &rarr; n</p></div>
+<div class="card r"><h4>Estimadores</h4><p><span class="pill">Sesgo=E(&theta;&#770;)&minus;&theta;</span><span class="pill">ECM=Sesgo&#178;+Var</span><br>pesos suman 1 &rarr; insesgado · menor &Sigma;peso&#178; &rarr; eficiente</p></div>
+</div>
+
+<h3 class="sec">Reglas del logaritmo (MV)</h3>
+<div class="formula">ln(A&middot;B)=ln A+ln B    ln(A^k)=k&middot;ln A
+ln(e^y)=y            ln(A/B)=ln A&minus;ln B</div>
+
+<h3 class="sec">Estimadores conocidos (resultado directo)</h3>
+<table>
+<tr><th>Distribucion</th><th>Momentos / MV</th></tr>
+<tr><td>Poisson(&lambda;)</td><td>&lambda;&#770; = X&#772;</td></tr>
+<tr><td>Bernoulli(p)</td><td>p&#770; = X&#772;</td></tr>
+<tr><td>Exponencial(&lambda;)</td><td>&lambda;&#770; = 1/X&#772;</td></tr>
+</table>
+
+<h3 class="sec">Habitos del profe (no los olvides)</h3>
+<table>
+<tr><th>Habito</th><th>Ejemplo</th></tr>
+<tr><td>Sombrero de estimador</td><td>&theta;&#770;, &lambda;&#770;, &mu;&#770;</td></tr>
+<tr><td>Cuatro decimales</td><td>28,2000</td></tr>
+<tr><td>Interpretar resultado</td><td>"en promedio... miles de pesos"</td></tr>
+</table>
+
+<h3 class="sec">Chequeos antes de entregar</h3>
+<div class="formula">VAD:        E(X&#178;) &ne; (E(X))&#178; ; en Var(Y) el a va al cuadrado
+Momentos:   E(X) sin x ; si &theta;&gt;0 y sale negativo &rarr; error de signo
+MV:         exponentes se SUMAN (&Sigma;x&#7522;) ; constantes mueren
+Estimadores: pesos suman 1 ? ; menor varianza gana</div>
+</div>
+
+<!-- ULTIMOS 15 MIN -->
+<div id="quince" class="page">
+<h1>&#9733; Ultimos 15 Minutos</h1>
+<p class="sub">Si solo te queda tiempo para una pestana, es esta</p>
+
+<div class="banner gold">
+<div class="bl">Lo unico que tienes que tener claro</div>
+<p>Cada tema es una receta fija. Momentos: iguala E(X) al promedio y despeja. MV: L &rarr; ln &rarr; deriva &rarr; 0 &rarr; despeja. Estimadores: pesos suman 1 = insesgado, menor varianza = eficiente. Y siempre: sombrero, 4 decimales, interpretar.</p>
+</div>
+
+<h3 class="sec">Las recetas en una linea</h3>
+<div class="formula big">VAD:        E=&Sigma;x&middot;P ; Var=E(X&#178;)&minus;(E(X))&#178;
+Momentos:   E(X) = X&#772;  &rarr; despeja
+MV:         L &rarr; ln &rarr; deriva=0 &rarr; despeja
+Estimadores: suman 1 = insesgado ; menor Var = eficiente</div>
+
+<h3 class="sec">Flujo MV — repaso veloz</h3>
+<div class="step"><div class="sn gold">1</div><div class="sb"><strong>Escribe f(x)</strong><p>La densidad que te dan</p></div></div>
+<div class="step"><div class="sn gold">2</div><div class="sb"><strong>Junta el producto</strong><p>exponente con x &rarr; &Sigma;x&#7522; ; constante &rarr; n ; base x &rarr; &prod;x&#7522;</p></div></div>
+<div class="step"><div class="sn gold">3</div><div class="sb"><strong>Log natural</strong><p>Baja exponentes, ln y e se cancelan</p></div></div>
+<div class="step"><div class="sn gold">4</div><div class="sb"><strong>Deriva = 0</strong><p>Las constantes mueren</p></div></div>
+<div class="step"><div class="sn gold">5</div><div class="sb"><strong>Despeja</strong><p>Con sombrero &lambda;&#770;</p></div></div>
+
+<h3 class="sec">Las trampas que MAS te cuestan</h3>
+<div class="trap"><span>&#128683;</span><span><strong>E(X&#178;) &ne; (E(X))&#178;.</strong> Eleva cada valor ANTES de ponderar.</span></div>
+<div class="trap"><span>&#128683;</span><span><strong>Var(aX+b) = a&#178;&middot;Var(X).</strong> El a&#178; va sobre la VARIANZA, no sobre E(X). El +b desaparece.</span></div>
+<div class="trap"><span>&#128683;</span><span><strong>Momentos:</strong> construye E(X) (sin x) antes de igualar. No uses la pmf como si fuera E(X).</span></div>
+<div class="trap"><span>&#128683;</span><span><strong>MV:</strong> los exponentes se SUMAN &rarr; &Sigma;x&#7522;, no n&middot;x.</span></div>
+<div class="trap"><span>&#128683;</span><span><strong>Signos:</strong> si &theta;&gt;0 y sale negativo, revisa el cambio de lado.</span></div>
+
+<h3 class="sec">Estimadores conocidos que caen</h3>
+<div class="formula">Poisson &rarr; &lambda;&#770;=X&#772;   Bernoulli &rarr; p&#770;=X&#772;   Exponencial &rarr; &lambda;&#770;=1/X&#772;</div>
+
+<div class="card g" style="margin-top:14px"><h4>&#10003; Antes de entregar revisa</h4><p>1. Notacion con sombrero (&theta;&#770;, &lambda;&#770;)?<br>2. Cuatro decimales?<br>3. Interprete el resultado con contexto?<br>4. En Momentos: E(X) quedo sin x?<br>5. En MV: exponentes sumados y constantes fuera?<br>6. En Estimadores: verifique que los pesos suman 1?</p></div>
+</div>
+
+<script>
+function show(id){
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  event.target.classList.add('active');
+}
+function tog(btn){
+  btn.classList.toggle('open');
+  btn.nextElementSibling.classList.toggle('open');
+}
+</script>
+</body>
+</html>
