@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="color-scheme" content="dark">
+<title>Certamen 2 — Guia Practica</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<script>
+  window.MathJax = {
+    tex: { inlineMath: [['\\(','\\)']], displayMath: [['\\[','\\]']] },
+    svg: { fontCache: 'global' },
+    options: { enableMenu: false }
+  };
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-svg.js" id="MathJax-script" async></script>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  color-scheme:dark;
+  --bg:#15151E;--panel:#1F1F2B;--panelh:#282836;--text:#EAE6DE;--muted:#9C96A6;--border:#33333F;
+  --nav:#0D0D14;--code:#0B0B12;--codetext:#E6E0D4;
+  --blue:#6FB0EA;--bl:#182A3E;--green:#5FC088;--gl:#16291F;
+  --amber:#E2A657;--al:#2C2611;--red:#F09090;--rl:#2E1919;--gray:#9C96A6
+}
+body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);font-size:14px;line-height:1.6}
+mjx-container{color:var(--codetext)}
+.nav{position:sticky;top:0;z-index:100;background:var(--nav);display:flex;overflow-x:auto;scrollbar-width:none;border-bottom:1px solid var(--border)}
+.nav::-webkit-scrollbar{display:none}
+.tab{background:none;border:none;cursor:pointer;color:#847E90;font-family:'DM Sans',sans-serif;font-size:11px;font-weight:700;letter-spacing:.04em;padding:11px 12px;white-space:nowrap;text-transform:uppercase;border-bottom:3px solid transparent}
+.tab.active{color:white;border-bottom-color:var(--blue)}
+.tab.hot{color:#FBBF24}
+.tab.hot.active{color:#FBBF24;border-bottom-color:#FBBF24}
+.page{display:none;max-width:880px;margin:0 auto;padding:26px 16px 70px}
+.page.active{display:block}
+h1{font-family:'Playfair Display',serif;font-size:25px;font-weight:900;margin-bottom:4px;color:var(--text)}
+.sub{color:var(--muted);font-size:13px;margin-bottom:20px}
+.banner{background:#1B4F8A;color:white;border-radius:10px;padding:16px 20px;margin-bottom:18px}
+.banner.gold{background:linear-gradient(135deg,#B45309,#7A3908)}
+.bl{font-size:11px;letter-spacing:.08em;text-transform:uppercase;opacity:.8;margin-bottom:4px}
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:16px}
+@media(max-width:560px){.g2{grid-template-columns:1fr}}
+.card{border-radius:10px;padding:14px 16px;background:var(--panel);border:1.5px solid var(--border);color:var(--text)}
+.card.b{border-left:4px solid var(--blue);background:var(--bl)}
+.card.g{border-left:4px solid var(--green);background:var(--gl)}
+.card.a{border-left:4px solid var(--amber);background:var(--al)}
+.card.r{border-left:4px solid var(--red);background:var(--rl)}
+.card h4{font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;margin-bottom:7px}
+.card.b h4{color:var(--blue)}.card.g h4{color:var(--green)}.card.a h4{color:var(--amber)}.card.r h4{color:var(--red)}
+.card p{font-size:13.5px;line-height:1.7;color:var(--text)}
+.sol{background:var(--code);color:var(--codetext);border-radius:8px;padding:8px 18px;margin:12px 0;overflow-x:auto;border:1px solid var(--border)}
+.sol .lbl{font-family:'DM Sans',sans-serif;font-size:12px;font-weight:700;color:var(--muted);margin-top:10px;text-transform:uppercase;letter-spacing:.03em}
+.sol mjx-container{margin:0.5em 0 !important}
+.sol .cmt{font-family:'DM Sans',sans-serif;font-size:12.5px;color:var(--muted);margin:2px 0 8px}
+table{width:100%;border-collapse:collapse;margin:10px 0;font-size:13.5px}
+th{background:var(--nav);color:white;padding:8px 11px;text-align:left;font-size:11px}
+td{padding:8px 11px;border-bottom:1px solid var(--border);color:var(--text)}
+tr:nth-child(even) td{background:#1A1A24}
+.sec{font-family:'Playfair Display',serif;font-size:17px;font-weight:700;margin:22px 0 10px;border-bottom:2px solid var(--border);padding-bottom:5px;color:var(--text)}
+.step{display:flex;gap:12px;align-items:flex-start;margin-bottom:11px}
+.sn{min-width:26px;height:26px;background:#2E6FB0;color:white;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;flex-shrink:0;margin-top:2px}
+.sn.gold{background:var(--amber);color:#1A1A2E}
+.sb strong{display:block;font-size:13.5px;margin-bottom:2px;color:var(--text)}
+.sb p{font-size:13.5px;color:var(--muted)}
+.trap{display:flex;gap:10px;padding:11px 15px;background:var(--rl);border-left:3px solid var(--red);border-radius:6px;margin-bottom:8px;font-size:13.5px;line-height:1.7}
+.note{background:var(--gl);border-left:4px solid var(--green);border-radius:6px;padding:11px 15px;margin:10px 0;font-size:13.5px;line-height:1.7}
+.note strong{color:var(--green)}
+.coll{margin-bottom:8px}
+.coll-btn{width:100%;background:var(--panel);border:1.5px solid var(--border);border-radius:8px;padding:11px 14px;text-align:left;cursor:pointer;font-family:'DM Sans',sans-serif;font-size:13.5px;font-weight:600;display:flex;justify-content:space-between;align-items:center;color:var(--text)}
+.coll-btn:hover{background:var(--panelh)}
+.coll-btn .arr{transition:transform .2s}
+.coll-btn.open .arr{transform:rotate(90deg)}
+.coll-body{display:none;padding:6px 14px 13px;background:var(--panel);border:1.5px solid var(--border);border-top:none;border-radius:0 0 8px 8px;font-size:13.5px}
+.coll-body.open{display:block}
+.simq{background:var(--panel);border:1.5px solid var(--border);border-radius:10px;padding:16px;margin-bottom:14px}
+.simq .qhead{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}
+.simq .qnum{font-family:'Playfair Display',serif;font-weight:700;font-size:16px;color:var(--text)}
+.simq .qpts{font-size:11px;font-weight:700;color:var(--blue);background:var(--bl);padding:3px 10px;border-radius:20px}
+.simq .qbody{font-size:15px;line-height:1.7;background:var(--bl);padding:13px 15px;border-radius:6px;margin-bottom:10px;color:var(--text)}
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <button class="tab active" onclick="show('inicio')">Inicio</button>
+  <button class="tab" onclick="show('medias')">1 · Dif. medias</button>
+  <button class="tab" onclick="show('var')">2 · Cociente var</button>
+  <button class="tab" onclick="show('muestra')">3 · Tamano muestra</button>
+  <button class="tab" onclick="show('estrat')">4 · Estratificado</button>
+  <button class="tab" onclick="show('prop')">5 · Dif. proporciones</button>
+  <button class="tab" onclick="show('tipos')">6 · Tipos muestreo</button>
+  <button class="tab" onclick="show('sim')">Simulacro</button>
+  <button class="tab" onclick="show('cheat')">Cheat Sheet</button>
+  <button class="tab hot" onclick="show('quince')">&#9733; Ultimos 15 min</button>
+</nav>
+
+<!-- INICIO -->
+<div id="inicio" class="page active">
+<h1>Certamen 2 — Metodos Estadisticos</h1>
+<p class="sub">Intervalos de confianza para 2 poblaciones · Tamano de muestra · Muestreo estratificado</p>
+
+<div class="banner">
+<div class="bl">Idea clave</div>
+<p>Todo intervalo tiene la MISMA forma: <b>estimador &plusmn; (valor critico)&times;(error estandar)</b>. Lo unico que cambia es qué valor critico (Z, t o F) y qué va dentro de la raiz. Si identificas bien el caso, la fórmula sale del formulario. El tamano de muestra es despejar <b>n</b>; el error es despejar <b>e</b>.</p>
+</div>
+
+<div class="card a" style="margin-bottom:16px">
+<h4>&#9888;&#65039; Habitos que cobran puntos</h4>
+<p><strong>1. Interpreta SIEMPRE</strong> el resultado en palabras (¿contiene el 0 / el 1? ¿qué significa en el contexto?).<br>
+<strong>2. Decimales:</strong> usa los que haya; no rellenes enteros con ceros.<br>
+<strong>3. Redondeo:</strong> tamano de muestra &rarr; <b>siempre hacia arriba</b>; afijación (estratos) &rarr; <b>normal</b>, y la suma de los \(n_h\) debe dar \(n\).</p>
+</div>
+
+<h3 class="sec">La brujula: cuando usar que</h3>
+<table>
+<tr><th>Si te piden...</th><th>Vas a...</th></tr>
+<tr><td>Comparar 2 medias</td><td>IC dif. de medias (4 casos, ver pestana 1)</td></tr>
+<tr><td>Comparar 2 varianzas</td><td>IC cociente de varianzas (F)</td></tr>
+<tr><td>Comparar 2 proporciones</td><td>IC dif. de proporciones (Z)</td></tr>
+<tr><td>¿Cuantos encuestar? (n)</td><td>Tamano de muestra (media o proporcion)</td></tr>
+<tr><td>¿Que precision tengo? (e)</td><td>Error de estimacion (despejar e)</td></tr>
+<tr><td>Repartir n en estratos</td><td>Afijación: proporcional u optima (Neyman)</td></tr>
+<tr><td>Nombrar/clasificar un muestreo</td><td>Tipos de muestreo (pestana 6)</td></tr>
+</table>
+
+<div class="note"><strong>Interpretar un IC:</strong> de una <b>diferencia</b> &rarr; ¿contiene el <b>0</b>? Si &rarr; no hay diferencia. De un <b>cociente de varianzas</b> &rarr; ¿contiene el <b>1</b>? Si &rarr; varianzas iguales.</div>
+
+<h3 class="sec">Como leer las tablas (Z, t, F)</h3>
+<div class="card b" style="margin-bottom:10px"><h4>Tabla Z (normal)</h4><p>Solo depende de la confianza. Memoriza: <b>90% &rarr; 1,645 · 95% &rarr; 1,96 · 99% &rarr; 2,576</b>. (Es \(Z_{1-\alpha/2}\): a 95%, \(\alpha=0{,}05\), \(\alpha/2=0{,}025\), y buscas \(1-0{,}025=0{,}975\).)</p></div>
+<div class="card b" style="margin-bottom:10px"><h4>Tabla t (Student)</h4><p>Tiene <b>filas = grados de libertad (gl)</b> y <b>columnas = probabilidad</b>. Pasos: (1) calcula el gl (Caso 3: \(n_1+n_2-2\); Caso 4: \(\nu\)). (2) ve a la columna \(1-\alpha/2\) (a 95% &rarr; columna <b>0,975</b>). (3) lee el cruce. Ej.: gl=12, 95% &rarr; \(t=2{,}179\).</p></div>
+<div class="card b"><h4>Tabla F (Fisher 0,975)</h4><p>Tiene <b>dos</b> grados de libertad: uno por columnas (gl del numerador) y otro por filas (gl del denominador). Buscas el valor en el <b>cruce de ambos</b>. Para el cociente de varianzas: el limite inferior usa \(F\) en \((n_1-1,\;n_2-1)\) y el superior en \((n_2-1,\;n_1-1)\) &mdash; ojo que van <b>invertidos</b>. Ej.: \((9,9)\) &rarr; \(F=4{,}03\).</p></div>
+</div>
+
+<!-- MEDIAS -->
+<div id="medias" class="page">
+<h1>1 · Diferencia de medias</h1>
+<p class="sub">El corazon del certamen (items 1-4). Los 4 casos son la misma fórmula.</p>
+
+<div class="sol">
+<div class="cmt">Esqueleto comun a los 4 casos:</div>
+\[ IC(\mu_1-\mu_2)=(\bar X_1-\bar X_2)\;\pm\;(\text{valor critico})\times(\text{error estandar}) \]
+</div>
+
+<h3 class="sec">Como elegir el caso (lee el enunciado)</h3>
+<div class="step"><div class="sn">1</div><div class="sb"><strong>¿\(\sigma^2\) conocidas?</strong><p>Si &rarr; Caso 1 (Z). Si no &rarr; sigue.</p></div></div>
+<div class="step"><div class="sn">2</div><div class="sb"><strong>¿\(n_1+n_2\ge 30\)?</strong><p>Si &rarr; Caso 2 (Z con S). Si no (&lt;30) &rarr; sigue.</p></div></div>
+<div class="step"><div class="sn">3</div><div class="sb"><strong>¿Varianzas iguales o distintas? (lo dice el enunciado)</strong><p>Iguales &rarr; Caso 3 (t con \(S_p\)). Distintas &rarr; Caso 4 (t con \(\nu\) de Welch).</p></div></div>
+
+<h3 class="sec">Los 4 casos</h3>
+<div class="sol">
+<div class="lbl">Caso 1 &mdash; &sigma; conocidas (Z)</div>
+\[ (\bar X_1-\bar X_2)\pm Z_{1-\alpha/2}\sqrt{\frac{\sigma_1^2}{n_1}+\frac{\sigma_2^2}{n_2}} \]
+<div class="lbl">Caso 2 &mdash; &sigma; desconocidas, \(n_1+n_2\ge30\) (Z con S)</div>
+\[ (\bar X_1-\bar X_2)\pm Z_{1-\alpha/2}\sqrt{\frac{S_1^2}{n_1}+\frac{S_2^2}{n_2}} \]
+<div class="lbl">Caso 3 &mdash; desconocidas IGUALES, n&lt;30 (t con Sp)</div>
+\[ (\bar X_1-\bar X_2)\pm t_{(n_1+n_2-2)}\,S_p\sqrt{\frac1{n_1}+\frac1{n_2}}\;,\quad S_p=\sqrt{\frac{(n_1-1)S_1^2+(n_2-1)S_2^2}{n_1+n_2-2}} \]
+<div class="lbl">Caso 4 &mdash; desconocidas DISTINTAS, n&lt;30 (t con Welch)</div>
+\[ (\bar X_1-\bar X_2)\pm t_{(\nu)}\sqrt{\frac{S_1^2}{n_1}+\frac{S_2^2}{n_2}}\;,\quad \nu=\frac{\left(\frac{S_1^2}{n_1}+\frac{S_2^2}{n_2}\right)^2}{\frac{(S_1^2/n_1)^2}{n_1-1}+\frac{(S_2^2/n_2)^2}{n_2-1}} \]
+<div class="cmt">La \(\nu\) sale con decimales: <b>redondea al entero mas cercano</b> (la guia resuelta redondea 10,52 &rarr; 11).</div>
+</div>
+
+<div class="card r" style="margin-bottom:8px"><h4>&#9888;&#65039; Trampas</h4><p>El denominador siempre es \(n\) (no \(\sigma\)). Nunca olvides el valor critico (Z o t) multiplicando. En \(S_p\): arriba van las \(S^2\) (no los promedios). En Welch: las piezas se dividen por \(n\); el \((n-1)\) va solo abajo.</p></div>
+
+<h3 class="sec">Ejemplo resuelto (Caso 1)</h3>
+<div class="card b"><h4>Deudas de dos sucursales</h4><p>A: \(n_1=10,\ \bar X_1=250000,\ \sigma_1=19500\). B: \(n_2=20,\ \bar X_2=232000,\ \sigma_2=12400\). 95% (\(Z=1{,}96\)).</p></div>
+<div class="sol">
+\[ (250000-232000)\pm 1{,}96\sqrt{\frac{19500^2}{10}+\frac{12400^2}{20}} \]
+\[ =18000\pm 1{,}96\cdot 6761{,}1 = 18000\pm 13251{,}8 = [\,4748{,}2\;;\;31251{,}8\,] \]
+<div class="cmt">No contiene el 0 y es todo positivo &rarr; la deuda media de A es mayor que la de B.</div>
+</div>
+
+<h3 class="sec">Ejemplo resuelto (Caso 4 &mdash; Welch, paso a paso)</h3>
+<div class="card b"><h4>Dos maquinas (tiempos por unidad)</h4><p>A: \(n_1=10,\ \bar X_1=56{,}7,\ S_1=1{,}89\). B: \(n_2=10,\ \bar X_2=49{,}6,\ S_2=6{,}46\). Varianzas desconocidas y distintas. 95%.</p></div>
+<div class="sol">
+<div class="lbl">1 · las dos piezas (dividir por n)</div>
+\[ \frac{S_1^2}{n_1}=\frac{1{,}89^2}{10}=0{,}3572 \qquad \frac{S_2^2}{n_2}=\frac{6{,}46^2}{10}=4{,}1732 \]
+<div class="lbl">2 · grados de libertad</div>
+\[ \nu=\frac{(0{,}3572+4{,}1732)^2}{\frac{0{,}3572^2}{9}+\frac{4{,}1732^2}{9}}=\frac{20{,}524}{1{,}949}=10{,}52\to 11 \]
+<div class="cmt">De tabla: \(t_{11;\,0{,}975}=2{,}201\).</div>
+<div class="lbl">3 · error e intervalo</div>
+\[ \text{error}=\sqrt{0{,}3572+4{,}1732}=2{,}128 \]
+\[ IC=(56{,}7-49{,}6)\pm 2{,}201\cdot 2{,}128 = 7{,}1\pm 4{,}68 = [\,2{,}42\;;\;11{,}78\,] \]
+<div class="cmt">No contiene el 0, todo positivo &rarr; A tarda mas que B; es decir, B es mas rapida.</div>
+</div>
+</div>
+
+<!-- COCIENTE VAR -->
+<div id="var" class="page">
+<h1>2 · Cociente de varianzas (F)</h1>
+<p class="sub">De yapa (no estaba escrito en el temario, pero se vio en clase y la ayudante recomendo estudiarlo).</p>
+
+<div class="sol">
+\[ IC\!\left(\frac{\sigma_1^2}{\sigma_2^2}\right)=\left[\;\frac{S_1^2}{S_2^2}\cdot\frac{1}{F_{0{,}975;\,n_1-1,\,n_2-1}}\;;\;\;\frac{S_1^2}{S_2^2}\cdot F_{0{,}975;\,n_2-1,\,n_1-1}\;\right] \]
+</div>
+
+<div class="step"><div class="sn">1</div><div class="sb"><strong>Cociente</strong><p>\(S_1^2/S_2^2\)</p></div></div>
+<div class="step"><div class="sn">2</div><div class="sb"><strong>Inferior: DIVIDE</strong><p>por \(F\) con gl normal \((n_1-1,\,n_2-1)\)</p></div></div>
+<div class="step"><div class="sn">3</div><div class="sb"><strong>Superior: MULTIPLICA</strong><p>por \(F\) con gl AL REVES \((n_2-1,\,n_1-1)\)</p></div></div>
+
+<div class="note"><strong>Interpretar:</strong> ¿contiene el <b>1</b>? Si &rarr; varianzas iguales. Todo sobre 1 &rarr; el de arriba (grupo 1) mas variable. Todo bajo 1 &rarr; grupo 2 mas variable. <br><b>Para elegir caso de medias:</b> iguales &rarr; Caso 3; distintas &rarr; Caso 4.</div>
+
+<h3 class="sec">Ejemplo resuelto</h3>
+<div class="card b"><h4>Dos maquinas</h4><p>\(n_1=10,\ S_1=1{,}89\); \(n_2=10,\ S_2=6{,}46\). 95%. De tabla \(F_{0{,}975;9,9}=4{,}03\).</p></div>
+<div class="sol">
+\[ \frac{S_1^2}{S_2^2}=\frac{1{,}89^2}{6{,}46^2}=0{,}0856 \]
+\[ \text{inf}=0{,}0856\cdot\tfrac{1}{4{,}03}=0{,}0212\qquad \text{sup}=0{,}0856\cdot 4{,}03=0{,}345 \]
+\[ IC=[\,0{,}0212\;;\;0{,}345\,] \]
+<div class="cmt">No contiene el 1 &rarr; varianzas distintas. (Para comparar sus medias: Caso 4.)</div>
+</div>
+</div>
+
+<!-- TAMANO MUESTRA -->
+<div id="muestra" class="page">
+<h1>3 · Tamano de muestra (+ error)</h1>
+<p class="sub">Aqui despejas n (o el error e). Items 5, 6 y 7.</p>
+
+<h3 class="sec">Dos preguntas para elegir</h3>
+<div class="step"><div class="sn">1</div><div class="sb"><strong>¿Media o proporcion?</strong><p>Promedio (usa \(\sigma\)) = media. Porcentaje (usa \(p\)) = proporcion.</p></div></div>
+<div class="step"><div class="sn">2</div><div class="sb"><strong>¿Te dan N?</strong><p>Si &rarr; finita. No &rarr; infinita.</p></div></div>
+
+<div class="sol">
+<div class="lbl">Proporcion</div>
+\[ \text{infinita: } n\ge\frac{Z^2 pq}{e^2}\qquad \text{finita: } n\ge\frac{Z^2 pq\,N}{e^2(N-1)+Z^2 pq} \]
+<div class="lbl">Media</div>
+\[ \text{infinita: } n\ge\left(\frac{Z\sigma}{e}\right)^2\qquad \text{finita: } n\ge\frac{N\left(\frac{Z\sigma}{e}\right)^2}{N+\left(\frac{Z\sigma}{e}\right)^2-1} \]
+<div class="lbl">Error de estimacion (despejar e)</div>
+\[ \text{media: } e=\frac{Z\sigma}{\sqrt n}\qquad \text{proporcion: } e=Z\sqrt{\frac{pq}{n}} \]
+</div>
+
+<div class="note"><strong>Reglas:</strong> proporcion sin dato previo de \(p\) &rarr; usa \(p=0{,}5\). <b>Redondea SIEMPRE hacia arriba.</b> Z: 90%&rarr;1,645 · 95%&rarr;1,96 · 99%&rarr;2,576.</div>
+
+<h3 class="sec">Relacion error &harr; tamano de muestra (concepto)</h3>
+<div class="card a"><h4>El error esta al cuadrado abajo</h4><p>Como \(n\) depende de \(1/e^2\), el error y el tamano se mueven en sentido contrario y <b>al cuadrado</b>:<br>
+&bull; Reducir el error <b>a la mitad</b> (ej. 6% &rarr; 3%) &rarr; \(n\) se <b>cuadruplica</b> (\(\times 4\)).<br>
+&bull; Reducir el error <b>a un tercio</b> &rarr; \(n\) se hace <b>\(\times 9\)</b>.<br>
+&bull; Mas confianza (Z mas grande) &rarr; \(n\) tambien sube.<br>
+Razon: al estar \(e\) al cuadrado en el denominador, dividir \(e\) por 2 multiplica \(n\) por \(2^2=4\).</p></div>
+
+<h3 class="sec">Variantes de costo / presupuesto</h3>
+<div class="card g"><h4>Aritmetica simple despues de tener n</h4><p>&bull; <b>"¿Cuantas encuestas puedo hacer con presupuesto \(P\) y costo \(c\) c/u?"</b> &rarr; \(\#=P/c\) (redondea <b>hacia abajo</b>: no puedes pasarte del presupuesto).<br>
+&bull; <b>"¿Cuanto debo invertir para \(n\) encuestas?"</b> &rarr; inversion \(=n\times c\).</p></div>
+
+<h3 class="sec">Ejemplos resueltos</h3>
+<div class="sol">
+<div class="lbl">Proporcion infinita (banco app, 95%, e=5%, p=0,4)</div>
+\[ n\ge\frac{1{,}96^2\cdot 0{,}4\cdot 0{,}6}{0{,}05^2}=368{,}8\to 369 \]
+<div class="lbl">Media finita (clinica N=500, 95%, e=2000, &sigma;=12000)</div>
+\[ n\ge\frac{500\,(11{,}76)^2}{500+(11{,}76)^2-1}=108{,}5\to 109 \]
+<div class="lbl">Error proporcion (n=400, p=0,7, 95%)</div>
+\[ e=1{,}96\sqrt{\tfrac{0{,}7\cdot0{,}3}{400}}=0{,}0449\approx 4{,}5\% \]
+<div class="lbl">Presupuesto (n=369 encuestas, costo \(2.500 c/u, presupuesto \)700.000)</div>
+\[ \#=\frac{700000}{2500}=280 \text{ encuestas (menos que 369; no alcanza para todas)} \]
+</div>
+</div>
+
+<!-- ESTRATIFICADO -->
+<div id="estrat" class="page">
+<h1>4 · Muestreo estratificado</h1>
+<p class="sub">Repartir una muestra total n entre estratos. Items 8-9.</p>
+
+<div class="sol">
+<div class="lbl">Afijación proporcional (solo tamano)</div>
+\[ n_h=n\cdot\frac{N_h}{N} \]
+<div class="lbl">Afijación optima / Neyman (tamano Y variabilidad)</div>
+\[ n_h=n\cdot\frac{N_h\,S_h}{\sum N_i\,S_i} \]
+</div>
+
+<div class="note"><strong>Diferencia:</strong> proporcional usa solo \(N_h\); Neyman multiplica \(N_h\cdot S_h\) (el estrato mas variable se lleva mas muestra). <b>Redondeo normal</b>, y la suma de los \(n_h\) debe dar \(\approx n\).</div>
+
+<h3 class="sec">Ejemplo resuelto (contraste)</h3>
+<div class="card b"><h4>Banco, n=100, 3 segmentos</h4><p>Premium (400, S=50000), Estandar (1200, S=20000), Basico (400, S=10000).</p></div>
+<div class="sol">
+<div class="lbl">Proporcional</div>
+\[ \text{Prem}=100\tfrac{400}{2000}=20\quad \text{Est}=100\tfrac{1200}{2000}=60\quad \text{Bas}=100\tfrac{400}{2000}=20 \]
+<div class="lbl">Neyman (sumar \(N_hS_h\): 20M+24M+4M=48M)</div>
+\[ \text{Prem}=100\tfrac{20}{48}=42\quad \text{Est}=100\tfrac{24}{48}=50\quad \text{Bas}=100\tfrac{4}{48}=8 \]
+<div class="cmt">Premium sube de 20 a 42 porque es el mas variable (S=50000). Esa es la gracia de Neyman.</div>
+</div>
+</div>
+
+<!-- PROPORCIONES -->
+<div id="prop" class="page">
+<h1>5 · Diferencia de proporciones</h1>
+<p class="sub">La mas facil: misma forma que medias, siempre con Z.</p>
+
+<div class="sol">
+\[ IC(p_1-p_2)=(\hat p_1-\hat p_2)\pm Z_{1-\alpha/2}\sqrt{\frac{\hat p_1(1-\hat p_1)}{n_1}+\frac{\hat p_2(1-\hat p_2)}{n_2}} \]
+</div>
+
+<div class="step"><div class="sn">1</div><div class="sb"><strong>Saca cada \(\hat p\)</strong><p>exitos / total en cada grupo</p></div></div>
+<div class="step"><div class="sn">2</div><div class="sb"><strong>Arma el IC</strong><p>resta &plusmn; Z &times; raiz</p></div></div>
+<div class="step"><div class="sn">3</div><div class="sb"><strong>Interpreta</strong><p>¿contiene el 0? Si &rarr; sin diferencia</p></div></div>
+
+<h3 class="sec">Ejemplo resuelto</h3>
+<div class="card b"><h4>Defectuosos en 2 lineas</h4><p>Linea 1: 6 de 60. Linea 2: 9 de 75. 95%.</p></div>
+<div class="sol">
+\[ \hat p_1=\tfrac{6}{60}=0{,}1\qquad \hat p_2=\tfrac{9}{75}=0{,}12 \]
+\[ (0{,}1-0{,}12)\pm 1{,}96\sqrt{\frac{0{,}1\cdot0{,}9}{60}+\frac{0{,}12\cdot0{,}88}{75}}=[\,-0{,}126\;;\;0{,}086\,] \]
+<div class="cmt">Contiene el 0 &rarr; no hay diferencia significativa entre las proporciones de defectuosos.</div>
+</div>
+</div>
+
+<!-- TIPOS DE MUESTREO -->
+<div id="tipos" class="page">
+<h1>6 · Tipos de muestreo</h1>
+<p class="sub">Parte conceptual (del PPT Clase Muestreo). Te pueden pedir clasificar o reconocer un tipo.</p>
+
+<div class="note"><strong>Dos grandes familias:</strong> <b>probabilistico</b> (cada elemento tiene una probabilidad conocida de ser elegido &rarr; permite inferencia) y <b>no probabilistico</b> (la seleccion es subjetiva, sin probabilidad conocida: por conveniencia, por cuotas, por juicio del investigador, bola de nieve).</div>
+
+<h3 class="sec">Los 4 probabilisticos (los del deck)</h3>
+<div class="g2">
+<div class="card b"><h4>1 · Aleatorio simple (MAS)</h4><p>Todos tienen la <b>misma probabilidad</b> de ser elegidos. Requiere una lista completa de la poblacion (marco muestral).</p></div>
+<div class="card b"><h4>2 · Sistematico</h4><p>Eliges un <b>punto de inicio aleatorio</b> y luego cada <b>k-esimo</b> elemento. Mas facil de administrar que el MAS.</p></div>
+<div class="card b"><h4>3 · Estratificado</h4><p>Divides la poblacion en <b>estratos</b> (subgrupos homogeneos por dentro, distintos entre si) y muestreas en cada uno. Mejora la precision.</p></div>
+<div class="card b"><h4>4 · Conglomerados</h4><p>Divides en <b>grupos naturales</b> (sucursales, cursos, ciudades) y seleccionas <b>conglomerados completos</b>. Reduce costos; menos preciso si los grupos son heterogeneos.</p></div>
+</div>
+
+<h3 class="sec">Estratificado vs Conglomerados (la confusion tipica del deck)</h3>
+<table>
+<tr><th>Caracteristica</th><th>Estratificado</th><th>Conglomerados</th></tr>
+<tr><td>Variabilidad entre grupos</td><td>ALTA (estratos distintos entre si)</td><td>BAJA (conglomerados similares entre si)</td></tr>
+<tr><td>Que se selecciona</td><td>Elementos de CADA estrato</td><td>Conglomerados COMPLETOS</td></tr>
+<tr><td>Proposito</td><td>Mejorar precision/representatividad</td><td>Reducir costos y traslados</td></tr>
+<tr><td>Requisito</td><td>Info para formar estratos</td><td>Lista de conglomerados</td></tr>
+</table>
+<div class="note"><strong>Pista para reconocer:</strong> si el enunciado forma grupos <b>por una caracteristica</b> (edad, segmento, facultad) y toma gente de cada uno &rarr; <b>estratificado</b>. Si toma <b>unidades completas</b> ya agrupadas naturalmente (sucursales enteras, cursos enteros) &rarr; <b>conglomerados</b>.</div>
+</div>
+
+<!-- SIMULACRO -->
+<div id="sim" class="page">
+<h1>Simulacro</h1>
+<p class="sub">Formato de la guia · resuelve antes de revelar</p>
+
+<div class="simq">
+<div class="qhead"><span class="qnum">P1 — Dif. medias (Caso 1)</span><span class="qpts">20 pts</span></div>
+<div class="qbody">Se comparan las deudas medias de dos sucursales. A: \(n_1=10\), \(\bar X_1=250000\), \(\sigma_1=19500\). B: \(n_2=20\), \(\bar X_2=232000\), \(\sigma_2=12400\). Las varianzas poblacionales son conocidas. Con 95%, ¿difieren las deudas medias?</div>
+<div class="coll"><button class="coll-btn" onclick="tog(this)">Ver solucion <span class="arr">&#9656;</span></button>
+<div class="coll-body"><div class="sol">
+<div class="cmt">&sigma; conocidas &rarr; Caso 1 (Z).</div>
+\[ 18000\pm 1{,}96\sqrt{\frac{19500^2}{10}+\frac{12400^2}{20}}=18000\pm 13251{,}8=[\,4748{,}2\;;\;31251{,}8\,] \]
+<div class="cmt">No contiene el 0 (todo positivo) &rarr; A tiene deuda media mayor que B.</div>
+</div></div></div>
+</div>
+
+<div class="simq">
+<div class="qhead"><span class="qnum">P2 — Dif. medias (Caso 3)</span><span class="qpts">25 pts</span></div>
+<div class="qbody">Dos fertilizantes. A: \(n_1=8\), \(\bar X_1=52\), \(S_1=4\). B: \(n_2=6\), \(\bar X_2=48\), \(S_2=3\). Varianzas desconocidas e iguales. 95% (\(t_{12;0{,}975}=2{,}179\)). ¿Hay diferencia?</div>
+<div class="coll"><button class="coll-btn" onclick="tog(this)">Ver solucion <span class="arr">&#9656;</span></button>
+<div class="coll-body"><div class="sol">
+\[ S_p=\sqrt{\frac{7\cdot4^2+5\cdot3^2}{12}}=3{,}617 \]
+\[ IC=4\pm 2{,}179\cdot 3{,}617\sqrt{\tfrac18+\tfrac16}=4\pm 4{,}257=[\,-0{,}257\;;\;8{,}257\,] \]
+<div class="cmt">Contiene el 0 &rarr; no hay diferencia significativa.</div>
+</div></div></div>
+</div>
+
+<div class="simq">
+<div class="qhead"><span class="qnum">P3 — Cociente de varianzas</span><span class="qpts">15 pts</span></div>
+<div class="qbody">Dos lineas de llenado. A: \(n_1=11\), \(S_1=0{,}012\). B: \(n_2=16\), \(S_2=0{,}005\). 95% (\(F_{0{,}975;10,15}=3{,}06\), \(F_{0{,}975;15,10}=3{,}52\)). ¿Difieren las varianzas?</div>
+<div class="coll"><button class="coll-btn" onclick="tog(this)">Ver solucion <span class="arr">&#9656;</span></button>
+<div class="coll-body"><div class="sol">
+\[ \frac{S_1^2}{S_2^2}=5{,}76\quad\Rightarrow\quad \text{inf}=\tfrac{5{,}76}{3{,}06}=1{,}88,\ \ \text{sup}=5{,}76\cdot3{,}52=20{,}28 \]
+\[ IC=[\,1{,}88\;;\;20{,}28\,] \]
+<div class="cmt">No contiene el 1 &rarr; varianzas distintas (A mas variable).</div>
+</div></div></div>
+</div>
+
+<div class="simq">
+<div class="qhead"><span class="qnum">P4 — Dif. de proporciones</span><span class="qpts">15 pts</span></div>
+<div class="qbody">Defectuosos en dos lineas: Linea 1, 6 de 60; Linea 2, 9 de 75. Con 95%, ¿difieren las proporciones de defectuosos?</div>
+<div class="coll"><button class="coll-btn" onclick="tog(this)">Ver solucion <span class="arr">&#9656;</span></button>
+<div class="coll-body"><div class="sol">
+\[ \hat p_1=0{,}1,\ \hat p_2=0{,}12 \]
+\[ (0{,}1-0{,}12)\pm1{,}96\sqrt{\tfrac{0{,}1\cdot0{,}9}{60}+\tfrac{0{,}12\cdot0{,}88}{75}}=[\,-0{,}126\;;\;0{,}086\,] \]
+<div class="cmt">Contiene el 0 &rarr; no hay diferencia.</div>
+</div></div></div>
+</div>
+
+<div class="simq">
+<div class="qhead"><span class="qnum">P5 — Tamano de muestra + error</span><span class="qpts">15 pts</span></div>
+<div class="qbody">a) Una universidad (2.000 estudiantes) quiere estimar la proporcion que usa la biblioteca digital. 95%, error 5%, sin estudios previos. ¿Tamano muestral? b) Si en vez de 5% el error fuera 2,5%, ¿que pasa con n (sin recalcular)?</div>
+<div class="coll"><button class="coll-btn" onclick="tog(this)">Ver solucion <span class="arr">&#9656;</span></button>
+<div class="coll-body"><div class="sol">
+<div class="cmt">a) Proporcion, dan N=2000 &rarr; finita. Sin dato previo &rarr; p=0,5.</div>
+\[ n\ge\frac{1{,}96^2\cdot0{,}25\cdot2000}{0{,}05^2(1999)+1{,}96^2\cdot0{,}25}=322{,}4\to 323 \]
+<div class="cmt">b) Reducir el error a la mitad (5% &rarr; 2,5%) &rarr; n se CUADRUPLICA (aprox &times;4), porque n depende de 1/e&sup2;.</div>
+</div></div></div>
+</div>
+
+<div class="simq">
+<div class="qhead"><span class="qnum">P6 — Estratificado</span><span class="qpts">25 pts</span></div>
+<div class="qbody">Una universidad divide 3.000 alumnos en 3 facultades: Ingenieria (1.500, S=30000), Comercial (1.000, S=15000), Derecho (500, S=20000). Muestra total n=150. a) Afijación proporcional. b) Afijación optima (Neyman).</div>
+<div class="coll"><button class="coll-btn" onclick="tog(this)">Ver solucion <span class="arr">&#9656;</span></button>
+<div class="coll-body"><div class="sol">
+<div class="lbl">a) Proporcional</div>
+\[ \text{Ing}=75\quad \text{Com}=50\quad \text{Der}=25 \]
+<div class="lbl">b) Neyman (\(\sum N_hS_h=45M+15M+10M=70M\))</div>
+\[ \text{Ing}=150\tfrac{45}{70}=96\quad \text{Com}=150\tfrac{15}{70}=32\quad \text{Der}=150\tfrac{10}{70}=21 \]
+<div class="cmt">Ingenieria se lleva mas en Neyman por ser la mas variable.</div>
+</div></div></div>
+</div>
+</div>
+
+<!-- CHEAT -->
+<div id="cheat" class="page">
+<h1>Cheat Sheet</h1>
+<p class="sub">Como decidir e interpretar (las fórmulas ya estan en tu formulario)</p>
+
+<h3 class="sec">Dif. de medias — elegir caso</h3>
+<table>
+<tr><th>Enunciado dice...</th><th>Caso</th></tr>
+<tr><td>&sigma; conocidas</td><td>1 &mdash; Z, raiz con &sigma;&sup2;</td></tr>
+<tr><td>&sigma; desconocidas, n1+n2&ge;30</td><td>2 &mdash; Z, raiz con S&sup2;</td></tr>
+<tr><td>desconocidas IGUALES, &lt;30</td><td>3 &mdash; t con Sp</td></tr>
+<tr><td>desconocidas DISTINTAS, &lt;30</td><td>4 &mdash; t con &nu; (Welch, redondea al mas cercano)</td></tr>
+</table>
+
+<h3 class="sec">Leer tablas</h3>
+<div class="note"><b>t:</b> fila = gl, columna = \(1-\alpha/2\) (95% &rarr; 0,975). <b>F:</b> cruce de (gl numerador, gl denominador); en cociente van invertidos para el limite superior. <b>Z:</b> 90&rarr;1,645 · 95&rarr;1,96 · 99&rarr;2,576.</div>
+
+<h3 class="sec">Interpretar</h3>
+<div class="note"><b>Diferencia</b> (medias o proporciones): ¿contiene el <b>0</b>? Si &rarr; sin diferencia; todo + &rarr; grupo 1 mayor; todo &minus; &rarr; grupo 2 mayor.<br><b>Cociente de varianzas:</b> ¿contiene el <b>1</b>? Si &rarr; iguales; sobre 1 &rarr; grupo 1 mas variable.</div>
+
+<h3 class="sec">Cociente de varianzas (receta)</h3>
+<div class="note">inf \(=\dfrac{S_1^2}{S_2^2}\div F_{0{,}975}\) (gl normal \(n_1{-}1,n_2{-}1\)) · sup \(=\dfrac{S_1^2}{S_2^2}\times F_{0{,}975}\) (gl invertido \(n_2{-}1,n_1{-}1\)). ¿contiene el 1? si &rarr; iguales.</div>
+<h3 class="sec">Tamano de muestra / error</h3>
+<div class="note">¿media (&sigma;) o proporcion (p)? · ¿dan N? &rarr; finita, si no &rarr; infinita · sin p previo &rarr; p=0,5 · <b>n redondea ARRIBA</b> · error = despejar e · <b>error a la mitad &rarr; n &times;4</b> (1/e&sup2;) · presupuesto: \#=P/c, inversion=n&middot;c.</div>
+
+<h3 class="sec">Estratificado</h3>
+<div class="note">Proporcional = por tamano (\(N_h/N\)) · Neyman = tamano&times;variabilidad (\(N_hS_h\)) · <b>redondeo normal</b>, suma = n.</div>
+
+<h3 class="sec">Tipos de muestreo</h3>
+<div class="note">Probabilistico: aleatorio simple, sistematico, estratificado, conglomerados. No probabilistico: conveniencia, cuota, juicio, bola de nieve. <b>Estratificado</b> = elementos de cada grupo (grupos distintos entre si); <b>conglomerados</b> = grupos completos (grupos similares entre si).</div>
+</div>
+
+<!-- ULTIMOS 15 -->
+<div id="quince" class="page">
+<h1>&#9733; Ultimos 15 Minutos</h1>
+<p class="sub">Si solo te queda tiempo para una pestana, es esta</p>
+
+<div class="banner gold"><div class="bl">Lo unico que tienes que tener claro</div>
+<p>Todo IC = estimador &plusmn; critico &times; error. Identifica el caso, saca la fórmula del formulario, calcula, e <b>interpreta</b> (0 para diferencias, 1 para cociente de varianzas). Tamano de muestra = despejar n (redondea arriba). Estratificado = repartir n (redondeo normal).</p></div>
+
+<h3 class="sec">Arbol de dif. de medias</h3>
+<div class="sol">
+\[ \sigma\text{ conocidas}\Rightarrow \text{Caso 1 (Z)} \]
+\[ \sigma\text{ desconocidas},\ n_1{+}n_2\ge30\Rightarrow \text{Caso 2 (Z con S)} \]
+\[ <30,\ \text{iguales}\Rightarrow \text{Caso 3 (t, }S_p)\qquad \text{distintas}\Rightarrow \text{Caso 4 (t, }\nu) \]
+</div>
+
+<h3 class="sec">Valores Z y tamano de muestra</h3>
+<div class="note">Z: 90&rarr;1,645 · 95&rarr;1,96 · 99&rarr;2,576.<br>Tamano: ¿media(&sigma;) o proporcion(p)? · ¿dan N? finita/infinita · sin p &rarr; p=0,5 · redondea ARRIBA · error a la mitad &rarr; n &times;4.</div>
+<h3 class="sec">Las trampas que MAS te cuestan</h3>
+<div class="trap"><span>&#128683;</span><span>Denominador siempre \(n\), no \(\sigma\). Nunca olvides el Z o t multiplicando la raiz.</span></div>
+<div class="trap"><span>&#128683;</span><span>\(S_p\): arriba van las \(S^2\) (no los promedios), pesadas por \((n-1)\).</span></div>
+<div class="trap"><span>&#128683;</span><span>Welch: piezas \(S^2/n\) (divide por n); el \((n-1)\) solo abajo; redondea \(\nu\) al mas cercano.</span></div>
+<div class="trap"><span>&#128683;</span><span>Cociente var: inferior DIVIDE, superior MULTIPLICA (gl al reves arriba).</span></div>
+<div class="trap"><span>&#128683;</span><span>Empareja cada estrato con SU propia \(S\). Redondeo: muestra &rarr; arriba; afijación &rarr; normal.</span></div>
+
+<h3 class="sec">Interpretacion express</h3>
+<div class="note">Diferencia &rarr; ¿0 adentro? = sin diferencia. Cociente var &rarr; ¿1 adentro? = iguales. Todo + &rarr; grupo 1 mayor; todo &minus; &rarr; grupo 2 mayor. Error a la mitad &rarr; n &times;4.</div>
+</div>
+
+<script>
+function show(id){
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  event.target.classList.add('active');
+}
+function tog(btn){
+  btn.classList.toggle('open');
+  btn.nextElementSibling.classList.toggle('open');
+}
+</script>
+</body>
+</html>
